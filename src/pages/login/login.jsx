@@ -1,9 +1,10 @@
 import React from "react";
 import axios from "axios";
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from "react-router-dom";
 import { Form, Input, Button, Checkbox, Modal, Space } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import "./login.css";
+import kad1 from "../../assets/video/kda_2.mp4";
 
 export default function Login(props) {
   /**
@@ -12,18 +13,21 @@ export default function Login(props) {
    */
   const loginCheck = ({ username, password }) => {
     console.log("Received values of form: ", username, password);
-    axios.post("/login", {
+    axios
+      .post("/login", {
         data: {
           username,
-          password
-        }
+          password,
+        },
       })
       .then((data) => {
-        console.log(data)
-        if (data.data.status === 1) {
+        console.log(data);
+        if (data.data.code === -1) {
           Modal.error({
             content: data.data.msg,
-          })
+          });
+        } else {
+          <Redirect path="/userList" />;
         }
       })
       .catch((e) => console.log(e));
@@ -31,6 +35,11 @@ export default function Login(props) {
 
   return (
     <>
+      <div className="login-bg">
+        <video className="login-video" autoPlay={true} loop={true} muted={true}>
+          <source src={kad1} type="video/mp4" />
+        </video>
+      </div>
       <div className="login-area">
         <div className="login-icon"></div>
         <Form
@@ -92,7 +101,7 @@ export default function Login(props) {
                 Login
               </Button>
             </Space>
-            Or <Link to='/register'>register now!</Link>
+            Or <Link to="/register">register now!</Link>
           </Form.Item>
         </Form>
       </div>
