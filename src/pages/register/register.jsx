@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Input, Tooltip, Row, Col, Checkbox, Button, Modal } from "antd";
 import {
   QuestionCircleOutlined,
@@ -12,7 +12,9 @@ import {
 } from "@ant-design/icons";
 import "./register.css";
 import axios from "axios";
-import kda2 from '../../assets/video/kda_4.mp4'
+import kda2 from "../../assets/video/kda_4.mp4";
+import { useHistory, Link } from "react-router-dom";
+import { debounce } from "../../Api/api";
 
 const formItemLayout = {
   labelCol: {
@@ -47,6 +49,7 @@ const tailFormItemLayout = {
 
 const RegistrationForm = () => {
   const [form] = Form.useForm();
+  const history = useHistory();
   /**
    *  对用户名进行校验：
    * @param {*} values
@@ -88,6 +91,7 @@ const RegistrationForm = () => {
               icon: <HeartOutlined />,
               content: msg,
             });
+            history.push("/login");
             break;
           case 1:
             Modal.warning({
@@ -107,14 +111,55 @@ const RegistrationForm = () => {
       })
       .catch((e) => console.log(e));
   };
-
+  //使用防抖函数，对用户名进行后台动态校验：
+  const [status, setStatus] = useState({
+    tip: "",
+    validateStatus: "",
+    hasFeedback: false,
+  });
+  const checkName = debounce((e) => {
+    console.log(e.target.value.length);
+    if (!e.target.value.length) {
+      setStatus({
+        tip: "用户名不能为空~",
+        validateStatus: "error",
+        hasFeedback: true,
+      });
+      return
+    }
+    axios
+      .get("/checkName?username=" + e.target.value)
+      .then((data) => {
+        console.log(data);
+        const status = data.data.code;
+        switch (status) {
+          case 0:
+            setStatus({
+              tip: "用户名可用哦~",
+              validateStatus: "success",
+              hasFeedback: true,
+            });
+            break;
+          case 1:
+            setStatus({
+              tip: "来晚了一步，用户名已被使用了~",
+              validateStatus: "error",
+              hasFeedback: true,
+            });
+            break;
+          default:
+            return;
+        }
+      })
+      .catch((e) => console.log(e));
+  }, 500);
   return (
     <>
-    <div className={'register-bg'}>
-      <video autoPlay={true} loop={true} muted={true}>
-        <source src={kda2} type="video/mp4"/>
-      </video>
-    </div>
+      <div className={"register-bg"}>
+        <video autoPlay={true} loop={true} muted={true}>
+          <source src={kda2} type="video/mp4" />
+        </video>
+      </div>
       <div className="register-area">
         <div className="register-icon"></div>
         <Form
@@ -127,10 +172,14 @@ const RegistrationForm = () => {
         >
           <Form.Item
             name="username"
+            hasFeedback={status.hasFeedback}
+            validateStatus={status.validateStatus}
+            help={status.tip}
+            onChange={(e) => checkName(e)}
             label={
               <span>
                 取一个有趣的名字&nbsp;
-                <Tooltip title="What do you want others to call you?">
+                <Tooltip title="仅支持字符串、下划线、数字以及字母的组合哦~">
                   <QuestionCircleOutlined />
                 </Tooltip>
               </span>
@@ -241,7 +290,7 @@ const RegistrationForm = () => {
             {...tailFormItemLayout}
           >
             <Checkbox>
-              I have read the <a href="">agreement</a>
+              I have read the <Link to="/arguments">agreement</Link>
             </Checkbox>
           </Form.Item>
           <Form.Item {...tailFormItemLayout}>

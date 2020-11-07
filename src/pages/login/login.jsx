@@ -1,12 +1,13 @@
 import React from "react";
 import axios from "axios";
-import { Link, Redirect } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Form, Input, Button, Checkbox, Modal, Space } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import "./login.css";
-import kad1 from "../../assets/video/kda_2.mp4";
+import kda1 from "../../assets/video/kda_2.mp4";
 
 export default function Login(props) {
+  const history = useHistory();
   /**
    * 登录账号密码校验
    * @param {username, password} string
@@ -27,7 +28,7 @@ export default function Login(props) {
             content: data.data.msg,
           });
         } else {
-          <Redirect path="/userList" />;
+          history.push("/userList");
         }
       })
       .catch((e) => console.log(e));
@@ -37,7 +38,7 @@ export default function Login(props) {
     <>
       <div className="login-bg">
         <video className="login-video" autoPlay={true} loop={true} muted={true}>
-          <source src={kad1} type="video/mp4" />
+          <source src={kda1} type="video/mp4" />
         </video>
       </div>
       <div className="login-area">
