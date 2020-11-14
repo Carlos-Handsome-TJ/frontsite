@@ -1,30 +1,11 @@
 /**
  * 封状请求接口
  */
+import { post, get } from './http'
 
-import axios from 'axios'
-
-export const reqLogin = (username, password) => {
-    axios({
-        method: 'POST',
-        url: '/login',
-        data: {
-            username,
-            password
-        }
-    }).then(data => {
-
-    }).catch(e => console.log(e))
-}
-
-//节流函数的封状：
-
-export const debounce = (fn, delay) => {
-    let timer = null
-    return function () {
-        if (timer) clearTimeout(timer)
-        timer = setTimeout(() => {
-            fn.apply(this, arguments)
-        }, delay);
-    }
-}
+//封状登录接口
+export const apiLogin = params => post('/user/login', params)
+//封状用户注册
+export const apiRegister = params => post('/user/register', params)
+//封状用户名验证接口
+export const apiCheckName = params => get('/user/checkName?username=', params)

@@ -1,39 +1,27 @@
 import React from "react";
-import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import { Form, Input, Button, Checkbox, Modal, Space } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import "./login.css";
 import kda1 from "../../assets/video/kda_2.mp4";
+import { apiLogin } from "../../Api/api";
 
-export default function Login(props) {
+export default function Login() {
   const history = useHistory();
   /**
    * 登录账号密码校验
    * @param {username, password} string
    */
-  const loginCheck = ({ username, password }) => {
-    console.log("Received values of form: ", username, password);
-    axios
-      .post("/login", {
-        data: {
-          username,
-          password,
-        },
-      })
-      .then((data) => {
-        console.log(data);
-        if (data.data.code === -1) {
-          Modal.error({
-            content: data.data.msg,
-          });
-        } else {
-          history.push("/userList");
-        }
-      })
-      .catch((e) => console.log(e));
+  const loginCheck = async ({ username, password }) => {
+    const res = await apiLogin({ username, password });
+    if (res.code === -1) {
+      Modal.error({
+        content: res.msg,
+      });
+    } else {
+      history.push("/userList");
+    }
   };
-
   return (
     <>
       <div className="login-bg">

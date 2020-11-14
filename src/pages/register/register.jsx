@@ -14,7 +14,8 @@ import "./register.css";
 import axios from "axios";
 import kda2 from "../../assets/video/kda_4.mp4";
 import { useHistory, Link } from "react-router-dom";
-import { debounce } from "../../Api/api";
+import { debounce } from "../../utils";
+import { apiRegister, apiCheckName } from "../../Api/api";
 
 const formItemLayout = {
   labelCol: {
@@ -51,65 +52,43 @@ const RegistrationForm = () => {
   const [form] = Form.useForm();
   const history = useHistory();
   /**
-   *  对用户名进行校验：
-   * @param {*} values
-   */
-  const checkUsername = (name) => {
-    axios
-      .get("/checkName", {
-        params: {
-          name,
-        },
-      })
-      .then((data) => {})
-      .catch((e) => console.log(e));
-  };
-
-  /**
    * 完成表单且校验成功
    * @param {object} values
    */
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     const { email, username, password, confirm, agreement } = values;
-    axios
-      .post("/register", {
-        data: {
-          email,
-          username,
-          password,
-          confirm,
-          agreement,
-        },
-      })
-      .then((data) => {
-        console.log(data);
-        const status = data.data.status;
-        const msg = data.data.msg;
-        switch (status) {
-          case 0:
-            Modal.success({
-              icon: <HeartOutlined />,
-              content: msg,
-            });
-            history.push("/login");
-            break;
-          case 1:
-            Modal.warning({
-              icon: "",
-              content: msg,
-            });
-            break;
-          case 2:
-            Modal.error({
-              icon: <AlertOutlined />,
-              content: msg,
-            });
-            break;
-          default:
-            return {};
-        }
-      })
-      .catch((e) => console.log(e));
+    const res = await apiRegister({
+      email,
+      username,
+      password,
+      confirm,
+      agreement,
+    });
+    const code = res.code;
+    const msg = res.msg;
+    switch (code) {
+      case 0:
+        Modal.success({
+          icon: <HeartOutlined />,
+          content: msg,
+        });
+        history.push("/login");
+        break;
+      case 1:
+        Modal.warning({
+          icon: "",
+          content: msg,
+        });
+        break;
+      case 2:
+        Modal.error({
+          icon: <AlertOutlined />,
+          content: msg,
+        });
+        break;
+      default:
+        return;
+    }
   };
   //使用防抖函数，对用户名进行后台动态校验：
   const [status, setStatus] = useState({
@@ -117,41 +96,35 @@ const RegistrationForm = () => {
     validateStatus: "",
     hasFeedback: false,
   });
-  const checkName = debounce((e) => {
-    console.log(e.target.value.length);
+  const checkName = debounce( async e => {
     if (!e.target.value.length) {
       setStatus({
         tip: "用户名不能为空~",
         validateStatus: "error",
         hasFeedback: true,
       });
-      return
+      return;
     }
-    axios
-      .get("/checkName?username=" + e.target.value)
-      .then((data) => {
-        console.log(data);
-        const status = data.data.code;
-        switch (status) {
-          case 0:
-            setStatus({
-              tip: "用户名可用哦~",
-              validateStatus: "success",
-              hasFeedback: true,
-            });
-            break;
-          case 1:
-            setStatus({
-              tip: "来晚了一步，用户名已被使用了~",
-              validateStatus: "error",
-              hasFeedback: true,
-            });
-            break;
-          default:
-            return;
-        }
-      })
-      .catch((e) => console.log(e));
+    const res = await apiCheckName(e.target.value)
+    const code = res.code
+    switch (code) {
+            case 0:
+              setStatus({
+                tip: "用户名可用哦~",
+                validateStatus: "success",
+                hasFeedback: true,
+              });
+              break;
+            case 1:
+              setStatus({
+                tip: "来晚了一步，用户名已被使用了~",
+                validateStatus: "error",
+                hasFeedback: true,
+              });
+              break;
+            default:
+              return;
+          }
   }, 500);
   return (
     <>
