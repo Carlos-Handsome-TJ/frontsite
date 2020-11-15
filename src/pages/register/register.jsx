@@ -15,7 +15,8 @@ import axios from "axios";
 import kda2 from "../../assets/video/kda_4.mp4";
 import { useHistory, Link } from "react-router-dom";
 import { debounce } from "../../utils";
-import { apiRegister, apiCheckName } from "../../Api/api";
+import { apiRegister, apiCheckName, apiGetCode } from "../../Api/api";
+import ColumnGroup from "antd/lib/table/ColumnGroup";
 
 const formItemLayout = {
   labelCol: {
@@ -96,7 +97,7 @@ const RegistrationForm = () => {
     validateStatus: "",
     hasFeedback: false,
   });
-  const checkName = debounce( async e => {
+  const checkName = debounce(async (e) => {
     if (!e.target.value.length) {
       setStatus({
         tip: "用户名不能为空~",
@@ -105,27 +106,57 @@ const RegistrationForm = () => {
       });
       return;
     }
-    const res = await apiCheckName(e.target.value)
-    const code = res.code
+    const res = await apiCheckName(e.target.value);
+    const code = res.code;
     switch (code) {
-            case 0:
-              setStatus({
-                tip: "用户名可用哦~",
-                validateStatus: "success",
-                hasFeedback: true,
-              });
-              break;
-            case 1:
-              setStatus({
-                tip: "来晚了一步，用户名已被使用了~",
-                validateStatus: "error",
-                hasFeedback: true,
-              });
-              break;
-            default:
-              return;
-          }
+      case 0:
+        setStatus({
+          tip: "用户名可用哦~",
+          validateStatus: "success",
+          hasFeedback: true,
+        });
+        break;
+      case 1:
+        setStatus({
+          tip: "来晚了一步，用户名已被使用了~",
+          validateStatus: "error",
+          hasFeedback: true,
+        });
+        break;
+      default:
+        return;
+    }
   }, 500);
+  /**
+   * 获取验证码
+   */
+  const [verifiedCode, setCode] = useState({
+    tip: "获取验证码",
+    number: null,
+  });
+  const getVerifiedCode = async () => {
+    const res = await apiGetCode();
+    const { num1, num2, num } = res.msg;
+    console.log(num1, num2, num);
+    setCode({
+      tip: `${num1} + ${num2} = ?`,
+      number: num,
+    });
+  };
+
+  /**
+   * 同意相关政策,显示关闭提示框
+   */
+  const [visible, setVisible] = useState(false);
+  const showModal = () => {
+    setVisible(true);
+  };
+  const handleOk = (e) => {
+    setVisible(false);
+  };
+  const handleCancel = (e) => {
+    setVisible(false);
+  };
   return (
     <>
       <div className={"register-bg"}>
@@ -152,7 +183,7 @@ const RegistrationForm = () => {
             label={
               <span>
                 取一个有趣的名字&nbsp;
-                <Tooltip title="仅支持字符串、下划线、数字以及字母的组合哦~">
+                <Tooltip title="仅支持字母、下划线、数字以及字母的组合哦~">
                   <QuestionCircleOutlined />
                 </Tooltip>
               </span>
@@ -225,8 +256,7 @@ const RegistrationForm = () => {
           </Form.Item>
 
           <Form.Item
-            label="Captcha"
-            extra="We must make sure that your are a human."
+            label="验证码"
           >
             <Row gutter={8}>
               <Col span={12}>
@@ -238,13 +268,19 @@ const RegistrationForm = () => {
                       required: true,
                       message: "Please input the captcha you got!",
                     },
+                    {
+                      validator: (_, value) =>
+                        parseInt(value) === verifiedCode.number
+                          ? Promise.resolve()
+                          : Promise.reject("验证码错误")
+                    },
                   ]}
                 >
                   <Input prefix={<IdcardTwoTone twoToneColor="#fd2131" />} />
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Button>Get captcha</Button>
+                <Button onClick={getVerifiedCode}>{verifiedCode.tip}</Button>
               </Col>
             </Row>
           </Form.Item>
@@ -263,8 +299,22 @@ const RegistrationForm = () => {
             {...tailFormItemLayout}
           >
             <Checkbox>
-              I have read the <Link to="/arguments">agreement</Link>
+              我已阅读
+              <span onClick={showModal} style={{ color: "#1890ff" }}>
+                相关政策
+              </span>
             </Checkbox>
+            <Modal
+              title="该网站政策"
+              visible={visible}
+              onOk={handleOk}
+              onCancel={handleCancel}
+            >
+              <p>第一条：禁止黄赌毒</p>
+              <p>第二条：请遵循相关国家政策法律法规，严禁发布政治敏感话题</p>
+              <p>第三条：谨防诈骗，钓鱼链接</p>
+              <p>后续我再补充：~！</p>
+            </Modal>
           </Form.Item>
           <Form.Item {...tailFormItemLayout}>
             <Button type="primary" htmlType="submit">

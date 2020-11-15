@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import { Form, Input, Button, Checkbox, Modal, Space } from "antd";
+import { Form, Input, Button, Checkbox, Modal, Space, Tooltip } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import "./login.css";
 import kda1 from "../../assets/video/kda_2.mp4";
@@ -93,6 +93,11 @@ export default function Login() {
             Or <Link to="/register">register now!</Link>
           </Form.Item>
         </Form>
+      </div>
+      <div className="login-footer">
+        <ul>
+          <li>© 2020 晨风扶绿的芭蕉</li>
+        </ul>
       </div>
     </>
   );
