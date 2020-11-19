@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Input, Tooltip, Row, Col, Checkbox, Button, Modal } from "antd";
 import {
   QuestionCircleOutlined,
@@ -13,10 +13,9 @@ import {
 import "./register.css";
 import axios from "axios";
 import kda2 from "../../assets/video/kda_4.mp4";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { debounce } from "../../utils";
 import { apiRegister, apiCheckName, apiGetCode } from "../../Api/api";
-import ColumnGroup from "antd/lib/table/ColumnGroup";
 
 const formItemLayout = {
   labelCol: {
@@ -106,7 +105,8 @@ const RegistrationForm = () => {
       });
       return;
     }
-    const res = await apiCheckName(e.target.value);
+    const res = await apiCheckName({ username: e.target.value });
+    console.log(res, "打印前端获取的数据");
     const code = res.code;
     switch (code) {
       case 0:
@@ -255,9 +255,7 @@ const RegistrationForm = () => {
             <Input.Password prefix={<SendOutlined twoToneColor="#52c41a" />} />
           </Form.Item>
 
-          <Form.Item
-            label="验证码"
-          >
+          <Form.Item label="验证码">
             <Row gutter={8}>
               <Col span={12}>
                 <Form.Item
@@ -272,7 +270,7 @@ const RegistrationForm = () => {
                       validator: (_, value) =>
                         parseInt(value) === verifiedCode.number
                           ? Promise.resolve()
-                          : Promise.reject("验证码错误")
+                          : Promise.reject("验证码错误"),
                     },
                   ]}
                 >
@@ -299,29 +297,27 @@ const RegistrationForm = () => {
             {...tailFormItemLayout}
           >
             <Checkbox>
-              我已阅读
-              <span onClick={showModal} style={{ color: "#1890ff" }}>
-                相关政策
-              </span>
+              I have read the <a href="">agreement</a>
             </Checkbox>
-            <Modal
-              title="该网站政策"
-              visible={visible}
-              onOk={handleOk}
-              onCancel={handleCancel}
-            >
-              <p>第一条：禁止黄赌毒</p>
-              <p>第二条：请遵循相关国家政策法律法规，严禁发布政治敏感话题</p>
-              <p>第三条：谨防诈骗，钓鱼链接</p>
-              <p>后续我再补充：~！</p>
-            </Modal>
           </Form.Item>
+
           <Form.Item {...tailFormItemLayout}>
             <Button type="primary" htmlType="submit">
               Register
             </Button>
           </Form.Item>
         </Form>
+        <Modal
+          title="该网站政策"
+          visible={visible}
+          onOk={handleOk}
+          onCancel={handleCancel}
+        >
+          <p>第一条：禁止黄赌毒</p>
+          <p>第二条：请遵循相关国家政策法律法规，严禁发布政治敏感话题</p>
+          <p>第三条：谨防诈骗，钓鱼链接</p>
+          <p>后续我再补充：~！</p>
+        </Modal>
       </div>
     </>
   );
