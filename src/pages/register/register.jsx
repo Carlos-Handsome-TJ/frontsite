@@ -9,6 +9,9 @@ import {
   SendOutlined,
   MailTwoTone,
   IdcardTwoTone,
+  WechatOutlined,
+  QqOutlined,
+  GithubOutlined,
 } from "@ant-design/icons";
 import "./register.css";
 import axios from "axios";
@@ -144,19 +147,6 @@ const RegistrationForm = () => {
     });
   };
 
-  /**
-   * 同意相关政策,显示关闭提示框
-   */
-  const [visible, setVisible] = useState(false);
-  const showModal = () => {
-    setVisible(true);
-  };
-  const handleOk = (e) => {
-    setVisible(false);
-  };
-  const handleCancel = (e) => {
-    setVisible(false);
-  };
   return (
     <>
       <div className={"register-bg"}>
@@ -307,17 +297,12 @@ const RegistrationForm = () => {
             </Button>
           </Form.Item>
         </Form>
-        <Modal
-          title="该网站政策"
-          visible={visible}
-          onOk={handleOk}
-          onCancel={handleCancel}
-        >
-          <p>第一条：禁止黄赌毒</p>
-          <p>第二条：请遵循相关国家政策法律法规，严禁发布政治敏感话题</p>
-          <p>第三条：谨防诈骗，钓鱼链接</p>
-          <p>后续我再补充：~！</p>
-        </Modal>
+        <div className="register-other">
+        <span style={{fontSize: "14px"}}>使用第三方登录</span>
+          <WechatOutlined />
+          <QqOutlined />
+          <GithubOutlined />
+        </div>
       </div>
     </>
   );

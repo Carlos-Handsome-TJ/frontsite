@@ -1,7 +1,13 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import { Form, Input, Button, Checkbox, Modal, Space, Tooltip } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { Form, Input, Button, Checkbox, Modal, Space } from "antd";
+import {
+  UserOutlined,
+  LockOutlined,
+  WechatOutlined,
+  QqOutlined,
+  GithubOutlined,
+} from "@ant-design/icons";
 import "./login.css";
 import kda1 from "../../assets/video/kda_2.mp4";
 import { apiLogin } from "../../Api/api";
@@ -19,6 +25,9 @@ export default function Login() {
         content: res.msg,
       });
     } else {
+      //获取后端返回的token，并存贮到本地:
+      const { token } = res;
+      localStorage.setItem("user_token", token);
       history.push("/userList");
     }
   };
@@ -93,6 +102,11 @@ export default function Login() {
             Or <Link to="/register">register now!</Link>
           </Form.Item>
         </Form>
+        <div className="login-other">
+          <WechatOutlined />
+          <QqOutlined />
+          <GithubOutlined />
+        </div>
       </div>
       <div className="login-footer">
         <ul>

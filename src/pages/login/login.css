@@ -47,3 +47,11 @@ ul {
 li {
     padding: 0 20px;
 }
+.login-other {
+    width: 50%;
+    margin: 0 auto;
+    font-size: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+}

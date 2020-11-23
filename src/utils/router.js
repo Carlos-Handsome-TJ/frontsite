@@ -28,6 +28,7 @@ const routers = [{
     key: '/userlist',
     exact: true,
     strict: false,
+    permission: ['admin', 'user'],
     requireAuth: true,
     component: UserList
 }, {

@@ -24,3 +24,11 @@
     height: 100vh;
     overflow: hidden;
 }
+.register-other {
+    display: flex;
+    width: 30%;
+    font-size: 20px;
+    margin: 0 auto;
+    text-align: center;
+    justify-content: space-between;
+}
