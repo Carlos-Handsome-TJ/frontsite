@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./userList.css";
 // import { apiGetData } from "../../Api/api";
-// import axios from "axios";
+import axios from "axios";
 // import {Redirect, Route, Link, useHistory } from 'react-router-dom'
 
 export default function UserList() {
@@ -11,10 +11,10 @@ export default function UserList() {
     //   console.log(222, res);
     // }
     // getData();
-    // axios.get('/list/userList')
-    // .then(res => {
-    //     console.log(res);
-    // }).catch(e => console.log(e))
+    axios.get('/list/userList')
+    .then(res => {
+        console.log(res);
+    }).catch(e => console.log(e))
   }, []);
 
   return (

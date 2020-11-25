@@ -3,22 +3,11 @@
  */
 import axios from 'axios';
 import { Modal } from 'antd';
-import { useDispatch } from 'react-redux'
-import { isLogin } from '../pages/login/store/index';
-
-
+import { BrowserRouter } from 'react-router-dom'
 // 请求超时时间
 axios.defaults.timeout = 10000;
-// axios.defaults.headers.post["Content-type"] = "application/json;charset=UTF-8";
 //请求拦截器：
 axios.interceptors.request.use(config => {
-    //本地有token，在请求头中带上token：
-    // const token = localStorage.getItem('user_token')
-    // if (token) {
-    //     axios.defaults.headers.common["Authorization"] = token
-    // } else {
-    //     delete axios.defaults.headers.common["Authorization"]
-    // }
     return config;
 }, error => {
 
@@ -27,17 +16,21 @@ axios.interceptors.request.use(config => {
 //返回拦截器：
 axios.interceptors.response.use(response => {
     console.log('打印下返回拦截器', response)
-    return response;
+    return response.data;
 }, error => {
     switch (error.response.status) {
         case 401:
-            //对401进行重定向：(有点问题)
+            //对401进行重定向:
             Modal.info({
                 icon: "",
                 title: "登录信息已过期",
                 content: "请重新登录",
                 okText: "确认",
-                onOk: () => { 
+                onOk: () => {
+                    // const route = new BrowserRouter()
+                    // route.history.push('/')
+                    //强制回到登录页面并刷新改页面：
+                    window.location.href = '/login'
                 }
             });
             break;

@@ -11,23 +11,23 @@ const routers = [{
     component: Login
 }, {
     path: '/login',
-    key: '/login',
+    key: '/login2',
     exact: true,
-    strict: false,
+    strict: true,
     requireAuth: false,
     component: Login
 }, {
     path: '/register',
     key: '/register',
     exact: true,
-    strict: false,
+    strict: true,
     requireAuth: false,
     component: Register
 }, {
     path: '/userlist',
     key: '/userlist',
     exact: true,
-    strict: false,
+    strict: true,
     permission: ['admin', 'user'],
     requireAuth: true,
     component: UserList
