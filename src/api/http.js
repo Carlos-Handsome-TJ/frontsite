@@ -1,19 +1,24 @@
 /**
  * 封状axios请求：
  */
-import axios from 'axios'
+import axios from 'axios';
+import { Modal } from 'antd';
+import { useDispatch } from 'react-redux'
+import { isLogin } from '../pages/login/store/index';
+
+
 // 请求超时时间
 axios.defaults.timeout = 10000;
-axios.defaults.header.post["Content-type"] = "application/json;charset=UTF-8";
+// axios.defaults.headers.post["Content-type"] = "application/json;charset=UTF-8";
 //请求拦截器：
 axios.interceptors.request.use(config => {
     //本地有token，在请求头中带上token：
-    const token = localStorage.getItem('user_token')
-    if (token) {
-        axios.defaults.headers.common["Authorization"] = token
-    } else {
-        delete axios.defaults.headers.common["Authorization"]
-    }
+    // const token = localStorage.getItem('user_token')
+    // if (token) {
+    //     axios.defaults.headers.common["Authorization"] = token
+    // } else {
+    //     delete axios.defaults.headers.common["Authorization"]
+    // }
     return config;
 }, error => {
 
@@ -21,11 +26,25 @@ axios.interceptors.request.use(config => {
 });
 //返回拦截器：
 axios.interceptors.response.use(response => {
-
+    console.log('打印下返回拦截器', response)
     return response;
 }, error => {
-    //对403进行重定向：
-    return Promise.reject(error);
+    switch (error.response.status) {
+        case 401:
+            //对401进行重定向：(有点问题)
+            Modal.info({
+                icon: "",
+                title: "登录信息已过期",
+                content: "请重新登录",
+                okText: "确认",
+                onOk: () => { 
+                }
+            });
+            break;
+        default:
+            return
+    }
+    // return Promise.reject(error);
 });
 
 /**

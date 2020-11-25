@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Form, Input, Tooltip, Row, Col, Checkbox, Button, Modal } from "antd";
 import {
   QuestionCircleOutlined,
@@ -14,7 +14,6 @@ import {
   GithubOutlined,
 } from "@ant-design/icons";
 import "./register.css";
-import axios from "axios";
 import kda2 from "../../assets/video/kda_4.mp4";
 import { useHistory } from "react-router-dom";
 import { debounce } from "../../utils";
@@ -109,7 +108,6 @@ const RegistrationForm = () => {
       return;
     }
     const res = await apiCheckName({ username: e.target.value });
-    console.log(res, "打印前端获取的数据");
     const code = res.code;
     switch (code) {
       case 0:
@@ -287,7 +285,7 @@ const RegistrationForm = () => {
             {...tailFormItemLayout}
           >
             <Checkbox>
-              I have read the <a href="">agreement</a>
+              I have read the <span style={{color: "#1890ff"}}>agreement</span>
             </Checkbox>
           </Form.Item>
 

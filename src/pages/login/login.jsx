@@ -11,9 +11,14 @@ import {
 import "./login.css";
 import kda1 from "../../assets/video/kda_2.mp4";
 import { apiLogin } from "../../Api/api";
+import { useDispatch } from "react-redux";
+import { isLogin } from "./store/index"
+
+
 
 export default function Login() {
   const history = useHistory();
+  const dispatch = useDispatch()
   /**
    * 登录账号密码校验
    * @param {username, password} string
@@ -26,8 +31,7 @@ export default function Login() {
       });
     } else {
       //获取后端返回的token，并存贮到本地:
-      const { token } = res;
-      localStorage.setItem("user_token", token);
+      dispatch(isLogin(true))
       history.push("/userList");
     }
   };
