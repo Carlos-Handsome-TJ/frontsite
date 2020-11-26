@@ -3,7 +3,6 @@
  */
 import axios from 'axios';
 import { Modal } from 'antd';
-import { BrowserRouter } from 'react-router-dom'
 // 请求超时时间
 axios.defaults.timeout = 10000;
 //请求拦截器：
@@ -15,8 +14,7 @@ axios.interceptors.request.use(config => {
 });
 //返回拦截器：
 axios.interceptors.response.use(response => {
-    console.log('打印下返回拦截器', response)
-    return response.data;
+    return response;
 }, error => {
     switch (error.response.status) {
         case 401:

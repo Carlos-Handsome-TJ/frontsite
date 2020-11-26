@@ -6,7 +6,7 @@ const routers = [{
     path: '/',
     key: '/login',
     exact: true,
-    strict: false,
+    strict: true,
     requireAuth: false,
     component: Login
 }, {
@@ -24,8 +24,8 @@ const routers = [{
     requireAuth: false,
     component: Register
 }, {
-    path: '/userlist',
-    key: '/userlist',
+    path: '/userList',
+    key: '/userList',
     exact: true,
     strict: true,
     permission: ['admin', 'user'],
