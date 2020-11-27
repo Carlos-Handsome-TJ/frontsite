@@ -8,24 +8,11 @@ import {
   MailOutlined,
   AppstoreOutlined,
 } from "@ant-design/icons";
-import { Route, Link } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import Recommend from "../../components/recommend/index";
+import News from "../../components/news/index";
 
-const { SubMenu } = Menu;
 export default function UserList() {
-  useEffect(() => {
-    // async function getData() {
-    //   const res = await apiGetData();
-    //   console.log(222, res);
-    // }
-    // getData();
-    axios
-      .get("/list/userList")
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((e) => console.log(e));
-  }, []);
-
   /**
    * 异步获取后端数据，提示框中显示内容
    */
@@ -53,45 +40,62 @@ export default function UserList() {
           1{/* <SettingOutlined className={'user-settings'}/> */}
         </div>
         <div className="user-content">
-          <div className="user-search">
-            <AutoComplete
-              className="user-search-input"
-              style={{ fontSize: "12px" }}
-              backfill={true}
-              options={options}
-              onSelect={onSelect}
-              onSearch={handleSearch}
-            >
-              <Input
-                size="large"
-                style={{ borderRadius: "30px", fontSize: "12px" }}
-                placeholder="search your interests"
-                prefix={<SearchOutlined className={"search-icon"} />}
-              />
-            </AutoComplete>
-            <SettingOutlined className={"user-settings"} />
+          <div className="user-content-header">
+            <div className="user-search">
+              <AutoComplete
+                className="user-search-input"
+                style={{ fontSize: "12px" }}
+                backfill={true}
+                options={options}
+                onSelect={onSelect}
+                onSearch={handleSearch}
+              >
+                <Input
+                  size="large"
+                  style={{ borderRadius: "30px", fontSize: "12px" }}
+                  placeholder="search your interests"
+                  prefix={<SearchOutlined className={"search-icon"} />}
+                />
+              </AutoComplete>
+              <SettingOutlined className={"user-settings"} />
+            </div>
+            <div className="user-nav">
+              <Menu
+                onClick={handleSelect}
+                style={{
+                  fontSize: "18px",
+                  fontWeight: "bold",
+                  fontFamily: "sans-serif",
+                }}
+                selectedKeys={selectedKey}
+                mode="horizontal"
+              >
+                <Menu.Item key="mail">
+                  <Link to="/userList/recommend">为你推荐</Link>
+                </Menu.Item>
+                <Menu.Item key="app">美国大选</Menu.Item>
+                <Menu.Item key="alipay1">趋势</Menu.Item>
+                <Menu.Item key="alipay2">
+                  <Link to="/userList/news">新闻</Link>
+                </Menu.Item>
+                <Menu.Item key="alipay3">体育</Menu.Item>
+                <Menu.Item key="alipay4">娱乐</Menu.Item>
+              </Menu>
+            </div>
           </div>
-          <div className="user-nav">
-            <Menu
-              onClick={handleSelect}
-              style={{ fontSize: "18px" }}
-              selectedKeys={selectedKey}
-              mode="horizontal"
-            >
-              <Menu.Item key="mail" icon={<MailOutlined />}>
-              <Link to='/userList/recommend'>
-              为你推荐
-              </Link>
-                {/* 为你推荐 */}
-              </Menu.Item>
-              <Menu.Item key="app" icon={<AppstoreOutlined />}>
-                美国大选
-              </Menu.Item>
-              <Menu.Item key="alipay1">趋势</Menu.Item>
-              <Menu.Item key="alipay2">新闻</Menu.Item>
-              <Menu.Item key="alipay3">体育</Menu.Item>
-              <Menu.Item key="alipay4">娱乐</Menu.Item>
-            </Menu>
+          <div className="user-content-body">
+            <Route
+              path="/userList/recommend"
+              exact={true}
+              strict={true}
+              component={Recommend}
+            />
+            <Route
+              path="/userList/news"
+              exact={true}
+              strict={true}
+              component={News}
+            />
           </div>
         </div>
         <div className="user-right">3</div>

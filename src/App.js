@@ -21,7 +21,7 @@ export default function App() {
           }} />
           <Route path="/login" exact strict component={Login} />
           <Route path="/register" exact strict component={Register} />
-          <Route path="/userList" exact strict component={UserList} />
+          <Route path="/userList"  component={UserList} />
         </Switch>
       </BrowserRouter>
     </>

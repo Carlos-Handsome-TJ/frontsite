@@ -1,8 +1,9 @@
 /**
  * 封状axios请求：
  */
-import axios from 'axios';
-import { Modal } from 'antd';
+import axios from "axios"
+import { Modal } from "antd"
+
 // 请求超时时间
 axios.defaults.timeout = 10000;
 //请求拦截器：
@@ -14,7 +15,7 @@ axios.interceptors.request.use(config => {
 });
 //返回拦截器：
 axios.interceptors.response.use(response => {
-    return response;
+    return response.data;
 }, error => {
     switch (error.response.status) {
         case 401:
@@ -28,7 +29,7 @@ axios.interceptors.response.use(response => {
                     // const route = new BrowserRouter()
                     // route.history.push('/')
                     //强制回到登录页面并刷新改页面：
-                    window.location.href = '/login'
+                    window.location.href = '/'
                 }
             });
             break;

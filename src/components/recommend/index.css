@@ -1,0 +1,10 @@
+.item-setting:hover {
+    color: #fff;
+    background:  #1890ff;
+    cursor: pointer;
+}
+.item-setting {
+    font-size: 16px;
+    /* background: #000; */
+    border-radius: 50%;
+}
