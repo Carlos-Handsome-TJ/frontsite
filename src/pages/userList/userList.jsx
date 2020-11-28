@@ -4,11 +4,9 @@ import axios from "axios";
 import { Input, AutoComplete, Menu } from "antd";
 import {
   SearchOutlined,
-  SettingOutlined,
-  MailOutlined,
-  AppstoreOutlined,
+  SettingOutlined
 } from "@ant-design/icons";
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 import Recommend from "../../components/recommend/index";
 import News from "../../components/news/index";
 
@@ -19,7 +17,7 @@ export default function UserList() {
   const [options, setOptions] = useState([]);
   const handleSearch = (value) => {
     setOptions(
-      value ? [{ value: "aaa" }, { value: "bbb" }, { value: "ccc" }] : []
+      value ? [{ value: "当然这个搜索框肯定是骗你玩的了" }, { value: "现在暂时还没开发搜索功能" }, { value: "先占个坑" }] : []
     );
   };
   const onSelect = (value) => {

@@ -1,10 +1,89 @@
-.item-setting:hover {
-    color: #fff;
-    background:  #1890ff;
-    cursor: pointer;
+.articles-item {
+  width: 100%;
+  display: flex;
+  box-sizing: border-box;
+  border-bottom: 1px solid #eee;
 }
-.item-setting {
-    font-size: 16px;
-    /* background: #000; */
-    border-radius: 50%;
+.item-left {
+  width: 10%;
+  line-height: 60px;
+  text-align: center;
+}
+.item-right {
+  width: 90%;
+  padding: 0 25px 0 0;
+}
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  line-height: 40px;
+  align-items: center;
+}
+.item-content-area {
+  width: 100%;
+  /* max-height: 9vh; */
+  line-height: 20px;
+  /* max-height: 80px; */
+  /* text-overflow: ellipsis; */
+  /* word-space: nowrap; */
+  /* white-space:nowrap; */
+  /* overflow: hidden; */
+  /* background: skyblue; */
+}
+.item-content-image {
+  display: flex;
+  /* justify-content: space-start; */
+  flex-shrink: 1;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-self: stretch;
+  max-height: 400px;
+  overflow: hidden;
+}
+.item-content-image img {
+  border-radius: 15px;
+  padding: 10px;
+}
+.item-footer {
+  /* line-height: 50px; */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 50px;
+  align-items: center;
+  /* background: #000; */
+}
+.item-user > span {
+  padding-right: 10px;
+}
+.item-icon {
+  font-size: 20px;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.item-icon:hover {
+  transition: all 0.5s;
+  color: #fff;
+  opacity: 0.7;
+  background: #1890ff;
+}
+.item-setting:hover {
+  transition: all 0.5s;
+  color: #fff;
+  background: #1890ff;
+}
+.item-heart:hover {
+  transition: all 0.5s;
+  color: #fff;
+  opacity: 0.6;
+  background: red;
+}
+.item-retweet:hover {
+  transition: all 0.5s;
+  color: #fff;
+  opacity: 0.6;
+  background: green;
 }

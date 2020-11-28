@@ -3,7 +3,6 @@
   height: 100vh;
   display: grid;
   grid-template-columns: 1.5fr 2fr 1.5fr;
-  font-family: Georgia, serif;
 }
 .user-search-input {
   width: 70%;

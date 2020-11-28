@@ -25,6 +25,8 @@ export default function Login() {
    */
   const loginCheck = async ({ username, password }) => {
     const res = await apiLogin({ username, password });
+    console.log(res)
+  
     if (res.code === -1) {
       Modal.error({
         content: res.msg,

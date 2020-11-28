@@ -15,7 +15,7 @@ axios.interceptors.request.use(config => {
 });
 //返回拦截器：
 axios.interceptors.response.use(response => {
-    return response.data;
+    return response;
 }, error => {
     switch (error.response.status) {
         case 401:
