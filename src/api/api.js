@@ -12,4 +12,4 @@ export const apiCheckName = params => get('/user/checkName', params)
 //封装获取验证码接口：
 export const apiGetCode = params => get('/user/getCode', params)
 //在用户主页获取数据接口：
-export const apiGetData = params => get('/list/userList', params)
+export const apiGetData = params => get('/list/articles', params)

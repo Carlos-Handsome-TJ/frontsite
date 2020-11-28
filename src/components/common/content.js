@@ -9,11 +9,14 @@ const { Paragraph } = Typography;
 const ContentArea = (props) => {
     const { content } = props;
     return (
-        <>
-            <Paragraph ellipsis={{ rows: 3, expandable: true, symbol: "more" }}>
-                {content}
-            </Paragraph>
-        </>
+      <>
+        <Paragraph
+          copyable={true}
+          ellipsis={{ rows: 3, expandable: true, symbol: "more" }}
+        >
+          {content}
+        </Paragraph>
+      </>
     );
 };
 export default ContentArea

@@ -9,7 +9,6 @@ import {
  */
 const UserInfo = (props) => {
     const { src, username, attention, followers } = props;
-    console.log("头部组件的数据", props);
     return (
         <>
             <Popover

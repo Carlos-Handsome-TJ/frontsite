@@ -11,7 +11,7 @@ const ImageArea = (props) => {
           <Image
             key={index}
             alt={image.alt}
-            width={200}
+            // width={200}
             src={image.src}
           ></Image>
         );

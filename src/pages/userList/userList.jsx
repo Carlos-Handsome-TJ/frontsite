@@ -2,35 +2,20 @@ import React, { useEffect, useState } from "react";
 import "./userList.css";
 import axios from "axios";
 import { Input, AutoComplete, Menu } from "antd";
-import {
-  SearchOutlined,
-  SettingOutlined
-} from "@ant-design/icons";
+import { SearchOutlined, SettingOutlined } from "@ant-design/icons";
 import { Route, Link } from "react-router-dom";
+import HeaderSearch from "../../components/common/search";
 import Recommend from "../../components/recommend/index";
 import News from "../../components/news/index";
 
 export default function UserList() {
-  /**
-   * 异步获取后端数据，提示框中显示内容
-   */
-  const [options, setOptions] = useState([]);
-  const handleSearch = (value) => {
-    setOptions(
-      value ? [{ value: "当然这个搜索框肯定是骗你玩的了" }, { value: "现在暂时还没开发搜索功能" }, { value: "先占个坑" }] : []
-    );
-  };
-  const onSelect = (value) => {
-    console.log("onSelect", value);
-  };
   /**
    * 点击导航菜单栏
    */
   const [selectedKey, setSelect] = useState("app");
   const handleSelect = (e) => {
     setSelect(e.key);
-  };
-
+  }
   return (
     <>
       <div className="user-box">
@@ -40,24 +25,11 @@ export default function UserList() {
         <div className="user-content">
           <div className="user-content-header">
             <div className="user-search">
-              <AutoComplete
-                className="user-search-input"
-                style={{ fontSize: "12px" }}
-                backfill={true}
-                options={options}
-                onSelect={onSelect}
-                onSearch={handleSearch}
-              >
-                <Input
-                  size="large"
-                  style={{ borderRadius: "30px", fontSize: "12px" }}
-                  placeholder="search your interests"
-                  prefix={<SearchOutlined className={"search-icon"} />}
-                />
-              </AutoComplete>
-              <SettingOutlined className={"user-settings"} />
+            {/**头部搜索框 */}
+              <HeaderSearch />
             </div>
             <div className="user-nav">
+            {/**导航 菜单 导航组件需要更进一层封状，只需要传入导航内容就可以实现导航需求*/}
               <Menu
                 onClick={handleSelect}
                 style={{
@@ -71,7 +43,7 @@ export default function UserList() {
                 <Menu.Item key="mail">
                   <Link to="/userList/recommend">为你推荐</Link>
                 </Menu.Item>
-                <Menu.Item key="app">美国大选</Menu.Item>
+                <Menu.Item key="app">热门</Menu.Item>
                 <Menu.Item key="alipay1">趋势</Menu.Item>
                 <Menu.Item key="alipay2">
                   <Link to="/userList/news">新闻</Link>
