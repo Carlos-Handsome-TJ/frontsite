@@ -1,7 +1,10 @@
 .recommend-list {
   padding: 0;
   margin: 0;
+  width: 100%;
   display: flex;
+  list-style: none;
+  box-sizing: border-box;
   flex-direction: column;
 }
 .articles-item {
@@ -38,7 +41,7 @@
 }
 .item-content-image {
   display: flex;
-  /* justify-content: space-start; */
+  justify-content: space-start;
   flex-shrink: 1;
   flex-direction: row;
   flex-wrap: wrap;
@@ -51,12 +54,11 @@
   /* height: 100px; */
   /* max-height: 200px; */
   overflow: hidden;
-
   border-radius: 15px;
   padding: 10px;
 }
 .item-footer {
-  /* line-height: 50px; */
+  line-height: 50px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: 50px;

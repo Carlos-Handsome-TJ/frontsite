@@ -1,0 +1,7 @@
+.editor-container {
+    position: fixed;
+    width: 25%;
+    height: 50%;
+    border-radius: 2%;
+    background: tomato;
+}

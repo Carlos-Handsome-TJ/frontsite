@@ -1,21 +1,20 @@
-import React, { useEffect, useState } from "react";
-import "./userList.css";
-import axios from "axios";
-import { Input, AutoComplete, Menu } from "antd";
-import { SearchOutlined, SettingOutlined } from "@ant-design/icons";
-import { Route, Link } from "react-router-dom";
-import HeaderSearch from "../../components/common/search";
-import Recommend from "../../components/recommend/index";
-import News from "../../components/news/index";
+import React, { useState } from "react"
+import "./userList.css"
+import { Menu, BackTop  } from "antd"
+import { Route, Link } from "react-router-dom"
+import HeaderSearch from "../../components/common/search"
+import Recommend from "../../components/recommend/index"
+import News from "../../components/news/index"
+import Editor from "../../components/edit/index"
 
-export default function UserList() {
+export default function UserList(props) {
   /**
    * 点击导航菜单栏
    */
-  const [selectedKey, setSelect] = useState("app");
+  const [selectedKey, setSelect] = useState(props.location.pathname);
   const handleSelect = (e) => {
     setSelect(e.key);
-  }
+  };
   return (
     <>
       <div className="user-box">
@@ -25,11 +24,12 @@ export default function UserList() {
         <div className="user-content">
           <div className="user-content-header">
             <div className="user-search">
-            {/**头部搜索框 */}
+              {/**头部搜索框 */}
               <HeaderSearch />
             </div>
             <div className="user-nav">
-            {/**导航 菜单 导航组件需要更进一层封状，只需要传入导航内容就可以实现导航需求*/}
+              {/**导航 菜单 导航组件需要更进一层封装，只需要传入导航内容就可以实现导航需求*/}
+              <BackTop />
               <Menu
                 onClick={handleSelect}
                 style={{
@@ -40,16 +40,22 @@ export default function UserList() {
                 selectedKeys={selectedKey}
                 mode="horizontal"
               >
-                <Menu.Item key="mail">
+                <Menu.Item key="/userList/recommend">
                   <Link to="/userList/recommend">为你推荐</Link>
                 </Menu.Item>
-                <Menu.Item key="app">热门</Menu.Item>
-                <Menu.Item key="alipay1">趋势</Menu.Item>
-                <Menu.Item key="alipay2">
+                <Menu.Item key="/userList/hot">
+                  <Link to="/userList/hot">热门</Link>
+                </Menu.Item>
+                <Menu.Item key="/userList/trend">
+                  <Link to="/userList/trend">趋势</Link>
+                </Menu.Item>
+                <Menu.Item key="/userList/news">
                   <Link to="/userList/news">新闻</Link>
                 </Menu.Item>
-                <Menu.Item key="alipay3">体育</Menu.Item>
-                <Menu.Item key="alipay4">娱乐</Menu.Item>
+                <Menu.Item key="/userList/sports">
+                  <Link to="/userList/sports">体育</Link>
+                </Menu.Item>
+                <Menu.Item key="">娱乐</Menu.Item>
               </Menu>
             </div>
           </div>
@@ -68,7 +74,9 @@ export default function UserList() {
             />
           </div>
         </div>
-        <div className="user-right">3</div>
+        <div className="user-right">
+          <Editor />
+        </div>
       </div>
     </>
   );

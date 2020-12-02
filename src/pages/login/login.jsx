@@ -9,12 +9,9 @@ import {
   GithubOutlined,
 } from "@ant-design/icons";
 import "./login.css";
-import kda1 from "../../assets/video/kda_2.mp4";
 import { apiLogin } from "../../Api/api";
 import { useDispatch } from "react-redux";
-import { isLogin } from "./store/index"
-
-
+import { isLogin, setUsername } from "./store/index"
 
 export default function Login() {
   const history = useHistory();
@@ -34,14 +31,15 @@ export default function Login() {
     } else {
       //获取后端返回的token，并存贮到本地:
       dispatch(isLogin(true))
-      history.push("/userList");
+      dispatch(setUsername(res.info.username))
+      history.push("/userList/recommend");
     }
   };
   return (
     <>
       <div className="login-bg">
         <video className="login-video" autoPlay={true} loop={true} muted={true}>
-          <source src={kda1} type="video/mp4" />
+          <source src={"https://mdup.apdcdn.tc.qq.com/vcloud1022.tc.qq.com/1022_a8b72b503fde4ac3a2b919c8e60fdf76.f0.mp4?vkey=A51567B0C1FA40E2221CDFD212CF28355AA5B9FA1E6AA4557FEAB6C4D4D3334B32263EC93BD196F4370E3214CFC7D119072E873A97689DBED4FA8007F041A8A19986FD47662CE6368CF1ED0D8A54C636448C62F4EB1ED36A&sha=0"} type="video/mp4" />
         </video>
       </div>
       <div className="login-area">

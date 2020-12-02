@@ -11,7 +11,6 @@ const ContentArea = (props) => {
     return (
       <>
         <Paragraph
-          copyable={true}
           ellipsis={{ rows: 3, expandable: true, symbol: "more" }}
         >
           {content}

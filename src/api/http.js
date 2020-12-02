@@ -8,6 +8,7 @@ import { Modal } from "antd"
 axios.defaults.timeout = 10000;
 //请求拦截器：
 axios.interceptors.request.use(config => {
+    // config.headers["X-Forwarded-For"] = "hhhh"
     return config;
 }, error => {
 

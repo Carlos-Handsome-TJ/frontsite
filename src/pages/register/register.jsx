@@ -149,7 +149,7 @@ const RegistrationForm = () => {
     <>
       <div className={"register-bg"}>
         <video autoPlay={true} loop={true} muted={true}>
-          <source src={kda2} type="video/mp4" />
+          <source src={"https://mdup.apdcdn.tc.qq.com/vcloud1022.tc.qq.com/1022_7cae5fc93c2e4553ad0925942324e61a.f0.mp4?vkey=570807798157A0D0C9FD76B6F371B5CA7E938D38B1F25DB63EAE1CB03F5FE92DA7722F4952093A36DC798AA4881F75B0CAA188F9786B577E102C485B936398007B69DBCDA4545ABC1C895E80BD48E11C877FAB2BEDCDA41F&sha=0"} type="video/mp4" />
         </video>
       </div>
       <div className="register-area">

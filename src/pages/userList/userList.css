@@ -10,8 +10,8 @@
   line-height: 30px;
 }
 .user-settings:hover {
-  transition: all 0.5s;
-  transform: rotate(45deg);
+  transition: all 1s;
+  transform: rotate(180deg);
   color: #008dff;
   cursor: pointer;
 }
@@ -23,7 +23,7 @@
   color: #008dff;
   font-size: 18px;
   padding-right: 10px;
-} 
+}
 .user-search {
   display: flex;
   justify-content: space-around;
@@ -40,5 +40,10 @@
   border-right: 1px solid #ccc;
 }
 .user-right {
+  padding-top: 20px;
   background: orange;
+  /* text-align: center;
+   */
+   display: flex;
+   justify-content: space-around;
 }
